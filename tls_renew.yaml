@@ -1,0 +1,20 @@
+- name: Renew certificates
+  hosts: localhost
+  vars:
+    acme_config_changed_or_new: false # only renew
+    acme_staging: false # prod toggle, defaults to staging
+  tasks:
+    - name: select certificates
+      pve.cloud.alchemy_read:
+        pg_conn_str: "{{ pg_conn_str }}"
+        table: acme_x509
+      register: acme_x509_query_all
+    - debug:
+        var: acme_x509_query_all
+    - loop: "{{ acme_x509_query_all.query_result }}"
+      vars:
+        acme_x509: "{{ item }}"
+      include_role:
+        name: pve.cloud.acme_workflow
+
+

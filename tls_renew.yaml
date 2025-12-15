@@ -5,7 +5,7 @@
     acme_staging: false # prod toggle, defaults to staging
   tasks:
     - name: select certificates
-      pve.cloud.alchemy_read:
+      pxc.cloud.alchemy_read:
         pg_conn_str: "{{ pg_conn_str }}"
         table: acme_x509
       register: acme_x509_query_all
@@ -15,6 +15,6 @@
       vars:
         acme_x509: "{{ item }}"
       include_role:
-        name: pve.cloud.acme_workflow
+        name: pxc.cloud.acme_workflow
 
 

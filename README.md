@@ -27,6 +27,24 @@ echo "postgresql+psycopg2://postgres:$(ssh root@$PVE_ANSIBLE_HOST cat /etc/pve/c
 # set acme_contact value with this, also put in ''
 ssh root@$PVE_ANSIBLE_HOST cat /etc/pve/cloud/cluster_vars.yaml | yq '.acme_contact'
 ```
+
+You also need to set acme method and credentials since we dont do any dynamic inventory loading:
+
+```yaml
+acme_method: 'route53' # 'ionos' is also available
+pve_cloud_secrets_map:
+  # base64 encoded json here as value, for ionos set 'ionos-api-key.json' also with b64 value
+  # echo from /etc/pve/cloud/secets/...json with base64 -w 0 ...json
+  'aws-route53-global.json': ''
+
+acme_accountkey: | # value from bash commands
+  ---BEGIN PRIVATE KEY---
+  ...
+
+pg_conn_str: '' # also from bash
+
+acme_contact: '' # acme contact email
+```
 5. create daily schedule and enjoy. In pve-cloud-tf-monitoring module there is the option to add awx job failures to alerts.
 
 the cron job inside pve-cloud-tf-controller will take care of syncing the tls secrets on the kubernetes side.

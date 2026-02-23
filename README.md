@@ -44,6 +44,8 @@ acme_accountkey: | # value from bash commands
 pg_conn_str: '' # also from bash
 
 acme_contact: '' # acme contact email
+
+pve_cloud_domain: '' # your cloud domain
 ```
 5. create daily schedule and enjoy. In pve-cloud-tf-monitoring module there is the option to add awx job failures to alerts.
 

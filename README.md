@@ -50,3 +50,7 @@ pve_cloud_domain: '' # your cloud domain
 5. create daily schedule and enjoy. In pve-cloud-tf-monitoring module there is the option to add awx job failures to alerts.
 
 the cron job inside pve-cloud-tf-controller will take care of syncing the tls secrets on the kubernetes side.
+
+### Multi cloud renew
+
+Awx can be used to remotely renew certificates in linked clouds. For that refer to the `renew_tls_remote` playbook. For configuring vars you can leave out the `acme_contact` and `acme_accountkey` since that is provided by the multi cloud gateway, however you do need to set `multi_cloud_token` aswell as `mc_peer_endpoint`.

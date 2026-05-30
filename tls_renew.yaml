@@ -11,10 +11,10 @@
       register: acme_x509_query_all
     - debug:
         var: acme_x509_query_all
+        
     - loop: "{{ acme_x509_query_all.query_result }}"
       vars:
         acme_x509: "{{ item }}"
-      include_role:
-        name: pxc.cloud.acme_workflow
+      ansible.builtin.include_tasks: workflow_alchemy_insert.yaml
 
 

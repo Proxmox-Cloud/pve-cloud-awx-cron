@@ -1,0 +1,17 @@
+---
+# update cert + insert into postgres (within cloud)
+- name: Execute workflow
+  ansible.builtin.include_role:
+    name: pxc.cloud.acme_workflow
+
+- name: Get peer acme x509 configs
+  ansible.builtin.uri:
+    url: "{{ mc_peer_endpoint }}/post-acme-x509-update"
+    method: POST
+    headers:
+      Authorization: "Bearer {{ multi_cloud_token }}"
+    body:
+      stack_fqdn: "{{ acme_x509.stack_fqdn }}"
+      ec_crt: "{{ tmp_psql_crt_update }}"
+      k8s: "{{ tmp_k8s_update }}"
+    status_code: 200

@@ -1,0 +1,34 @@
+- name: Renew remote certificates
+  hosts: localhost
+  vars:
+    acme_config_changed_or_new: false # only renew
+    acme_staging: false # prod toggle, defaults to staging
+  tasks:
+    - name: Get peer acme account
+      ansible.builtin.uri:
+        url: "{{ mc_peer_endpoint }}/get-acme-account"
+        method: GET
+        headers:
+          Authorization: "Bearer {{ multi_cloud_token }}"
+        status_code: 200
+      register: acme_account_resp
+
+    - name: Get peer acme x509 configs
+      ansible.builtin.uri:
+        url: "{{ mc_peer_endpoint }}/get-acme-configs"
+        method: GET
+        headers:
+          Authorization: "Bearer {{ multi_cloud_token }}"
+        status_code: 200
+      register: acme_configs_resp
+    - debug:
+        msg: "{{ acme_configs_resp.json }}"
+
+    - set_fact:
+        acme_contact: "{{ acme_account_resp.json['acme_contact'] }}"
+        acme_accountkey: "{{ acme_account_resp.json['acme-account.key'] }}"
+
+    - loop: "{{ acme_configs_resp.json }}"
+      vars:
+        acme_x509: "{{ item }}"
+      ansible.builtin.include_tasks: workflow_alchemy_insert.yaml

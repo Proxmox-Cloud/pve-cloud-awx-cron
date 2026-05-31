@@ -3,6 +3,7 @@
   vars:
     acme_config_changed_or_new: false # only renew
     acme_staging: false # prod toggle, defaults to staging
+    load_method_secrets: false # remote playbook requires setting the secrets explicitly in awx
   tasks:
     - name: Get peer acme account
       ansible.builtin.uri:

@@ -32,10 +32,9 @@ You also need to set acme method and credentials since we dont do any dynamic in
 
 ```yaml
 acme_method: 'route53' # 'ionos' is also available
-pve_cloud_secrets_map:
-  # base64 encoded json here as value, for ionos set 'ionos-api-key.json' also with b64 value
-  # echo from /etc/pve/cloud/secets/...json with base64 -w 0 ...json
-  'aws-route53-global.json': ''
+aws_route53_global:
+  AWS_ACCESS_KEY_ID: YOUR_ACCESS_KEY_ID
+  AWS_SECRET_ACCESS_KEY: YOUR_SECRET_ACCESS_KEY
 
 acme_accountkey: | # value from bash commands
   ---BEGIN PRIVATE KEY---
@@ -53,4 +52,4 @@ the cron job inside pve-cloud-tf-controller will take care of syncing the tls se
 
 ### Multi cloud renew
 
-Awx can be used to remotely renew certificates in linked clouds. For that refer to the `renew_tls_remote` playbook. For configuring you only need to set `acme_method` and the corresponding secret json in `pve_cloud_secrets_map`. Besides those `multi_cloud_token` aswell as `mc_peer_endpoint` to configure the peer cloud to perform the refresh for.
+Awx can be used to remotely renew certificates in linked clouds. For that refer to the `renew_tls_remote` playbook. For configuring you only need to set `acme_method` and the corresponding secret based on your auth method. Besides those `multi_cloud_token` aswell as `mc_peer_endpoint` to configure the peer cloud to perform the refresh for.

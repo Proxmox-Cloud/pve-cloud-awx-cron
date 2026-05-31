@@ -13,6 +13,9 @@
         status_code: 200
       register: acme_account_resp
 
+    - debug:
+        msg: "{{ acme_account_resp.json }}"
+
     - name: Get peer acme x509 configs
       ansible.builtin.uri:
         url: "{{ mc_peer_endpoint }}/get-acme-configs"
@@ -21,6 +24,7 @@
           Authorization: "Bearer {{ multi_cloud_token }}"
         status_code: 200
       register: acme_configs_resp
+
     - debug:
         msg: "{{ acme_configs_resp.json }}"
 

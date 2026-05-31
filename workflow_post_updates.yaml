@@ -16,6 +16,7 @@
     method: POST
     headers:
       Authorization: "Bearer {{ multi_cloud_token }}"
+    body_format: json
     body:
       stack_fqdn: "{{ acme_x509.stack_fqdn }}"
       ec_crt: "{{ tmp_psql_crt_update }}"

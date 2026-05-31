@@ -4,7 +4,12 @@
   ansible.builtin.include_role:
     name: pxc.cloud.acme_workflow
 
-- name: Get peer acme x509 configs
+- debug:
+    var: tmp_psql_crt_update
+- debug:
+    var: tmp_k8s_update
+
+- name: Post update to peer gw
   when: ret_acme_collect.changed
   ansible.builtin.uri:
     url: "{{ mc_peer_endpoint }}/post-acme-x509-update"

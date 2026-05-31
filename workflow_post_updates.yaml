@@ -5,6 +5,7 @@
     name: pxc.cloud.acme_workflow
 
 - name: Get peer acme x509 configs
+  when: ret_acme_collect.changed
   ansible.builtin.uri:
     url: "{{ mc_peer_endpoint }}/post-acme-x509-update"
     method: POST

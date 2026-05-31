@@ -6,7 +6,7 @@
 
 - name: Update certificate in postgres
   when: ret_acme_collect.changed
-  alchemy_update:
+  pxc.cloud.alchemy_update:
     pg_conn_str: "{{ pg_conn_str }}"
     table: acme_x509
     values:

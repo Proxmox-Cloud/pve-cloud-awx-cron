@@ -53,4 +53,4 @@ the cron job inside pve-cloud-tf-controller will take care of syncing the tls se
 
 ### Multi cloud renew
 
-Awx can be used to remotely renew certificates in linked clouds. For that refer to the `renew_tls_remote` playbook. For configuring vars you can leave out the `acme_contact` and `acme_accountkey` since that is provided by the multi cloud gateway, however you do need to set `multi_cloud_token` aswell as `mc_peer_endpoint`.
+Awx can be used to remotely renew certificates in linked clouds. For that refer to the `renew_tls_remote` playbook. For configuring you only need to set `acme_method` and the corresponding secret json in `pve_cloud_secrets_map`. Besides those `multi_cloud_token` aswell as `mc_peer_endpoint` to configure the peer cloud to perform the refresh for.

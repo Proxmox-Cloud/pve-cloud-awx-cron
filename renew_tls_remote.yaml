@@ -30,7 +30,7 @@
 
     - set_fact:
         acme_contact: "{{ acme_account_resp.json['acme_contact'] }}"
-        acme_accountkey: "{{ acme_account_resp.json['acme-account.key'] }}"
+        acme_accountkey: "{{ acme_account_resp.json['acme-account.key'] | b64decode }}" # file secret
 
     - loop: "{{ acme_configs_resp.json }}"
       vars:
